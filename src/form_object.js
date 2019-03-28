@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash.clonedeep'
+
 export default class FormBase {
   /**
    * 建立 Form 的 instance
@@ -51,13 +53,21 @@ export default class FormBase {
 
   static dataAssigner(source, target) {
     for (let key in source) {
-      target[key] = source[key]
+      if (source[key] instanceof Object) {
+        target[key] = cloneDeep(source[key])
+      } else {
+        target[key] = source[key]
+      }
     }
   }
 
   static dataDumper(source, target, originalData) {
     for (let key in originalData) {
-      target[key] = source[key]
+      if (source[key] instanceof Object) {
+        target[key] = cloneDeep(source[key])
+      } else {
+        target[key] = source[key]
+      }
     }
 
     return target
